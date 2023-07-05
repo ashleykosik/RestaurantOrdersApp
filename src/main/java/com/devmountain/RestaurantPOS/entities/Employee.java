@@ -1,5 +1,6 @@
 package com.devmountain.RestaurantPOS.entities;
 
+import com.devmountain.RestaurantPOS.dtos.EmployeeDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -89,5 +90,13 @@ public class Employee {
     public Employee() {
     }
 
+    public Employee(EmployeeDto employeeDto) {
+        if (employeeDto.getId() != null) {
+            this.id = employeeDto.getId();
+        }
+        if (employeeDto.getPassword() != null) {
+            this.password = employeeDto.getPassword();
+        }
+    }
 
 }

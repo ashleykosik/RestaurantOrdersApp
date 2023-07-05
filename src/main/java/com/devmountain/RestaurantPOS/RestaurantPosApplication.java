@@ -7,7 +7,6 @@ import java.util.Date;
 
 @SpringBootApplication
 public class RestaurantPosApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(RestaurantPosApplication.class, args);
 	}
