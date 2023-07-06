@@ -22,12 +22,13 @@ public class Menu {
     @Column(name = "menuId")
     private Long menuId;
 
-    @Column(name = "item-name")
-    private String itemName;
+    @Column(name = "item")
+    private String item;
 
-    @ManyToMany(mappedBy = "menu", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonManagedReference
-    private Set<Order> newOrder = new HashSet<>();
+    @ManyToOne
+    @JsonBackReference
+    private Order order;
+
 
 
     public Long getId() {
@@ -38,12 +39,12 @@ public class Menu {
         this.menuId = menuId;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getItem() {
+        return item;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setItem(String item) {
+        this.item = item;
     }
 
 
@@ -51,8 +52,8 @@ public class Menu {
         if (menuDto.getId() != null) {
             this.menuId = menuDto.getId();
         }
-        if (menuDto.getItemName() != null) {
-            this.itemName = menuDto.getItemName();
+        if (menuDto.getItem() != null) {
+            this.item = menuDto.getItem();
         }
     }
 }

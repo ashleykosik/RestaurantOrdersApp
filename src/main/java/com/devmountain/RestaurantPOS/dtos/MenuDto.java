@@ -13,14 +13,14 @@ import java.io.Serializable;
 public class MenuDto implements Serializable {
 
     private Long id;
-    private String itemName;
+    private String item;
 
     public MenuDto (Menu menu) {
         if (menu.getId() != null) {
             this.id = menu.getId();
         }
-        if (menu.getItemName() != null) {
-            this.itemName = menu.getItemName();
+        if (menu.getItem() != null) {
+            this.item = menu.getItem();
         }
     }
 }

@@ -34,14 +34,10 @@ public class Order {
 //    @Column(name = "feedback")
 //    private String feedback;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(
-            name = "Orders-Placed",
-            joinColumns = @JoinColumn(name = "orderId"),
-            inverseJoinColumns = @JoinColumn(name = "menuId")
-            //String = "comment"
-    )
-    private Set<Menu> menu = new HashSet<>();
+    @OneToMany(mappedBy ="order", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonManagedReference
+    private Set<Menu> menuSet = new HashSet<>();
+
 
     public Order (OrderDto orderDto) {
         if (orderDto.getOrderId() != null) {

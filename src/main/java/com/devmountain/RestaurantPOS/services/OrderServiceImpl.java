@@ -9,8 +9,11 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -22,39 +25,45 @@ public class OrderServiceImpl implements OrderService {
     private MenuRepository menuRepository;
 
 
-
     // get all active orders
     @Override
-    public List<OrderDto> getAllActiveOrders(boolean complete) {
-        Optional<Order> orderOptional = orderRepository.findById();
-        if (orderOptional.isComplete()) { // if complete = false in repository
-            return Optional.of(new OrderDto(orderOptional.get()));
+    @Transactional
+    public List<OrderDto> getAllActiveOrders() {
+        List<Order> orderList = orderRepository.findAll();
+        List<OrderDto> orderDtoList = orderList.stream().map(order -> new OrderDto(order)).collect(Collectors.toList());
+        for (int i = 0; i < orderDtoList.size(); i++) {
+            //removed completed orders here
+            if (orderDtoList.get(i).isComplete()) {
+                orderDtoList.remove(i);
+                i--;
+            }
         }
-        return Optional.empty();
+        if (orderList.isEmpty()) {
+            return Collections.emptyList();
+        } else {
+            return orderDtoList;
+        }
     }
 
-    //add
+
+    //create order
+    @Override
     @Transactional
-    public void addOrder(OrderDto orderDto, Long menuId) {
+    public List<String> createOrder(OrderDto orderDto) {
+        List<String> response = new ArrayList<>();
         Order order = new Order(orderDto);
         orderRepository.saveAndFlush(order);
-        Optional<Menu> menuOptional = menuRepository.findById(menuId);
-        menuOptional.ifPresent(order::setMenu);
-        orderRepository.saveAndFlush(order);
+       response.add("http://localhost:8080/");
+       return response;
     }
 
-    //add menu item & add comment
 
-
-
-
-
-    // update - mark complete - complete status
+    // update - complete status
     @Override
     @Transactional
     public void updateOrderById(OrderDto orderDto) {
-        Optional<Order> orderOptional = orderRepository.findById(orderDto.getId());
-        orderOptional.ifPresent( order -> {
+        Optional<Order> orderOptional = orderRepository.findById(orderDto.getOrderId());
+        orderOptional.ifPresent(order -> {
             order.setComplete(orderDto.isComplete());
             orderRepository.saveAndFlush(order);
         });
@@ -62,17 +71,11 @@ public class OrderServiceImpl implements OrderService {
 
 
     // delete whole order
+    @Override
     @Transactional
     public void deleteOrderById(Long orderId) {
         Optional<Order> orderOptional = orderRepository.findById(orderId);
         orderOptional.ifPresent(order -> orderRepository.delete(order));
-    }
-
-    // delete menu item from ordersPlaced
-    @Transactional
-    public void deleteOrderPlacedById(Long orderPlacedId) {
-        Optional<Order> orderOptional = orderRepository.findById(orderPlacedId); // menuId?
-        orderOptional.ifPresent(ordersPlaced -> orderRepository.delete(ordersPlaced));
     }
 
 
