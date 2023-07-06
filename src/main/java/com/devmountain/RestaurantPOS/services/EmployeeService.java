@@ -11,5 +11,6 @@ public interface EmployeeService {
     List<String> addEmployee(EmployeeDto employeeDto);
 
     //verify credentials during login
+    @Transactional
     List<String> employeeLogin(EmployeeDto employeeDto);
 }

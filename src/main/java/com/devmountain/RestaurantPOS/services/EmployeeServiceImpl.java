@@ -27,12 +27,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<String> addEmployee(EmployeeDto employeeDto) {
         List<String> response = new ArrayList<>();
         Employee employee = new Employee(employeeDto);
-        EmployeeRepository.saveAndFlush(employee);
+        //EmployeeRepository.saveAndFlush(employee);
         response.add("Employee Added Successfully");
         return response;
     }
     //verify credentials during login
     @Override
+    @Transactional
     public List<String> employeeLogin(EmployeeDto employeeDto) {
         List<String> response = new ArrayList<>();
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeDto.getId());

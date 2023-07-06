@@ -27,7 +27,7 @@ public class Order {
     @Column(name = "date")
     private Date date = new Date();
 
-    @Column(name = "complete", columnDefinition = "boolean default true")
+    @Column(name = "complete", columnDefinition = "boolean default false")
     private boolean complete = false; // default
 
     //backlog - feedback note
@@ -42,6 +42,30 @@ public class Order {
             //String = "comment"
     )
     private Set<Menu> menu = new HashSet<>();
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public boolean isComplete() {
+        return complete;
+    }
+
+    public void setComplete(final boolean complete) {
+        this.complete = complete;
+    }
 
     public Order (OrderDto orderDto) {
         if (orderDto.getOrderId() != null) {
