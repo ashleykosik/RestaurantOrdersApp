@@ -19,7 +19,7 @@ public class OrderController {
 
     @GetMapping
     public List<OrderDto> getAllActiveOrders() {
-        return OrderService.getAllActiveOrders();
+        return orderService.getAllActiveOrders();
     }
 
     @PostMapping("/createOrder")

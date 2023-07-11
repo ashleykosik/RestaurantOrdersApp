@@ -2,32 +2,37 @@ package com.devmountain.RestaurantPOS.entities;
 
 import com.devmountain.RestaurantPOS.dtos.EmployeeDto;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Entity
 @Table(name = "Employees")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column
+    @Column(name= "last_name")
     private String lastName;
 
-    @Column
+    @Column(name = "password")
     private String password;
 
-    @Column
-    private int phoneNumber;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
-    @Column
-    private String address;
+    @Column(name = "email")
+    private String email;
 
 
     public Long getId() {
@@ -62,33 +67,22 @@ public class Employee {
         this.password = password;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddress() {
-        return address;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setEmail(String address) {
+        this.email = address;
     }
 
-    public Employee(Long id, String firstName, String lastName, String password, int phoneNumber, String address) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-    }
-
-    public Employee() {
-    }
 
     public Employee(EmployeeDto employeeDto) {
         if (employeeDto.getId() != null) {
@@ -96,6 +90,18 @@ public class Employee {
         }
         if (employeeDto.getPassword() != null) {
             this.password = employeeDto.getPassword();
+        }
+        if (employeeDto.getFirstName() != null) {
+            this.firstName = employeeDto.getFirstName();
+        }
+        if (employeeDto.getLastName() != null) {
+            this.lastName = employeeDto.getLastName();
+        }
+        if (employeeDto.getPhoneNumber() != null) {
+            this.phoneNumber = employeeDto.getPhoneNumber();
+        }
+        if (employeeDto.getEmail() != null) {
+            this.email = employeeDto.getEmail();
         }
     }
 

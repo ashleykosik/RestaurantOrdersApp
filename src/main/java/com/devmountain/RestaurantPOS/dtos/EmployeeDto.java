@@ -16,8 +16,8 @@ public class EmployeeDto implements Serializable {
     private String firstName;
     private String lastName;
     private String password;
-    private int phoneNumber;
-    private String address;
+    private String phoneNumber;
+    private String email;
 
     public EmployeeDto (Employee employee) {
         if (employee.getId() != null) {
@@ -32,11 +32,11 @@ public class EmployeeDto implements Serializable {
         if (employee.getPassword() != null) {
             this.password = employee.getPassword();
         }
-        if (employee.getPhoneNumber() > 0) {
+        if (employee.getPhoneNumber() != null) {
             this.phoneNumber = employee.getPhoneNumber();
         }
-        if (employee.getAddress() != null) {
-            this.address = employee.getAddress();
+        if (employee.getEmail() != null) {
+            this.email = employee.getEmail();
         }
 
     }

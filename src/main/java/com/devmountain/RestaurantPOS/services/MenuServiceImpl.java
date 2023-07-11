@@ -8,6 +8,7 @@ import com.devmountain.RestaurantPOS.repositories.MenuRepository;
 import com.devmountain.RestaurantPOS.repositories.OrderRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Optional;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 import java.util.Collections;
 import java.util.List;
 
+@Service
 public class MenuServiceImpl implements MenuService {
 
     @Autowired

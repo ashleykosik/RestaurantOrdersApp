@@ -32,6 +32,7 @@ public class EmployeeController {
     //handle employee login
     @PostMapping("/login")
     public List<String> employeeLogin(@RequestBody EmployeeDto employeeDto) {
+        System.out.println(employeeDto);
         return employeeService.employeeLogin(employeeDto);
     }
 }
