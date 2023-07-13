@@ -27,12 +27,8 @@ public class Order {
     @Column(name = "date")
     private Date date = new Date();
 
-    @Column(name = "complete", columnDefinition = "boolean default true")
+    @Column(name = "complete", columnDefinition = "boolean default false")
     private boolean complete = false; // default
-
-    //backlog - feedback note
-//    @Column(name = "feedback")
-//    private String feedback;
 
     @OneToMany(mappedBy ="order", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonManagedReference

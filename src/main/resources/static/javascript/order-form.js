@@ -2,7 +2,7 @@
 //submit button
 const form = document.getElementById('form-submit')
 //input
-const order = document.getElementById('new-order')
+const item = document.getElementById('new-order')
 
 
 
@@ -15,14 +15,15 @@ const baseUrl = 'http://localhost:8080/api/v1/menu'
 const handleSubmit = async (e) => {
     e.preventDefault()
     let bodyObj = {
-        body: order
+        body: item.value
     }
-    await addOrder(bodyObj);
-    order.value = ''
+    console.log(bodyObj)
+    await addItem(bodyObj);
+    item.value = ''
 }
 
 //ask about routing
-async function addOrder(obj) {
+async function addItem(obj) {
     const response = await fetch(`${baseUrl}order/${orderId}`, {
         method: "POST",
         body: JSON.stringify(obj),
@@ -34,9 +35,20 @@ async function addOrder(obj) {
     }
 }
 
+
 // get next order id? or change routing above
-getFetchSize();
+
+async function getOrdersTableSize() {
+    await fetch(`${baseUrl}user/${userId}`, {
+        method: "GET",
+        headers: headers
+    })
+        .then(response => response.json())
+        .then(data => createNoteCards(data))
+        .catch(err => console.error(err))
+}
+//getFetchSize();
 
 
 //event listener
-form.addEventListener('submit', handleSubmit)
+form.addEventListener('click', handleSubmit)

@@ -10,9 +10,11 @@ public interface OrderService {
     @Transactional
     List<OrderDto> getAllActiveOrders();
 
+    int getAllOrders();
+
     //create order
     @Transactional
-    List<String> createOrder(OrderDto orderDto);
+    List<String> createOrder();
 
     // update - complete status
     @Transactional

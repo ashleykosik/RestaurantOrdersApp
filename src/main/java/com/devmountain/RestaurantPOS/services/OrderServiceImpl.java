@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,16 +46,23 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    @Override
+    public int getAllOrders() {
+        List<Order> orderList = orderRepository.findAll();
+        List<OrderDto> orderDtoList = orderList.stream().map(order -> new OrderDto(order)).collect(Collectors.toList());
+        return orderDtoList.size();
+
+    }
 
     //create order
     @Override
     @Transactional
-    public List<String> createOrder(OrderDto orderDto) {
+    public List<String> createOrder() {
         List<String> response = new ArrayList<>();
-        Order order = new Order(orderDto);
+        Order order = new Order();
         orderRepository.saveAndFlush(order);
-       response.add("http://localhost:8080/");
-       return response;
+        response.add("http://localhost:8080/order-form.html");
+        return response;
     }
 
 
