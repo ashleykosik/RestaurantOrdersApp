@@ -69,6 +69,7 @@ async function handleOrderEdit(e){
         body: JSON.stringify(bodyObj),
         headers: headers
     })
+        .then(item.innerText = '')
         .catch(err => console.error(err))
 
     return getActiveOrders();
@@ -88,7 +89,7 @@ const container = document.getElementById("active-orders")
                             <p id="body${obj.orderId}">${obj.item}</p>
 
                         <div class="d-flex justify-content-between">
-                            <button class="brown-btn" onclick="handleDelete(${obj.orderId})">Delete</button>
+                            <button class="lite-btn" onclick="handleDelete(${obj.orderId})">Delete</button>
                         </div>
                     </div>
                 </div>

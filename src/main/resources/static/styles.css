@@ -145,7 +145,6 @@ button {
 .card {
     background-color: #CD6A64;
     padding: 0 10px 20px 10px;
-    height: 80vh;
     margin: auto;
 }
 
@@ -192,4 +191,26 @@ button {
 }
 #logout {
     align-self: flex-end;
+}
+
+#edit-order-title{
+    margin: 20px
+}
+
+
+#edit-order-label {
+    display: inline;
+    padding: 10px;
+    width: 50px;
+}
+
+#edit-order-number {
+    width: 50px;
+    display: inline;
+    padding: 5px;
+    border: solid black 2px
+}
+
+.order-number{
+    margin-bottom: 10px
 }

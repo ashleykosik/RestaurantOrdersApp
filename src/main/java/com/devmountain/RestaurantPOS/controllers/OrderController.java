@@ -37,6 +37,8 @@ public class OrderController {
 
     @PostMapping("createOrder/{userId}")
     public void createOrder(@RequestBody OrderDto orderDto, @PathVariable Long userId) {
+        System.out.println(orderDto);
+        System.out.println(userId);
         orderService.createOrder(orderDto, userId);
     }
 
