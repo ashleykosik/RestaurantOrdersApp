@@ -44,6 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             if (passwordEncoder.matches(employeeDto.getPassword(), employeeOptional.get().getPassword())) {
                 response.add("Employee Login Successful");
                 response.add(String.valueOf(employeeOptional.get().getId()));
+                response.add("http://localhost:8080/login.html");
 
             } else {
                 response.add("Employee ID or password incorrect");

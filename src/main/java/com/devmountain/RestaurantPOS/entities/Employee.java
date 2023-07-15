@@ -1,11 +1,14 @@
 package com.devmountain.RestaurantPOS.entities;
 
 import com.devmountain.RestaurantPOS.dtos.EmployeeDto;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "Employees")
@@ -82,6 +85,10 @@ public class Employee {
     public void setEmail(String address) {
         this.email = address;
     }
+
+    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JsonManagedReference
+    private Set<Order> OrderSet = new HashSet<>();
 
 
     public Employee(EmployeeDto employeeDto) {

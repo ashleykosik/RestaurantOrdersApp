@@ -1,7 +1,10 @@
 
 //html elements
 const triggerOrder = document.getElementById('trigger-order')
+const updateOrderBtn = document.getElementById('edit-button')
 
+const orderNum = document.getElementById('edit-order-number')
+const item = document.getElementById('order-body')
 
 
 
@@ -33,49 +36,59 @@ async function getAllOrders() {
          return document.cookie = response
 }
 
-async function handleDelete(noteId){
-    await fetch(baseUrl + noteId, {
+async function getOrderById(orderId) {
+    await fetch(`${baseUrl}order/` + orderId, {
+    method: "GET",
+    headers: headers
+    })
+    .then(res => res.json())
+    .then(data => populateModal(data))
+    .catch(err => console.error(err.message))
+}
+
+async function handleDelete(orderId){
+    await fetch(`${baseUrl}order/` + orderId, {
         method: "DELETE",
         headers: headers
     })
         .catch(err => console.error(err))
 
-    return getNotes(userId);
+    return getActiveOrders();
 }
 
-async function handleNoteEdit(noteId){
+async function handleOrderEdit(e){
+       e.preventDefault()
     let bodyObj = {
-        id: noteId,
-        body: noteBody.value
+        orderId: orderNum.value,
+        item: item.value
     }
+    console.log(bodyObj)
 
-    await fetch(baseUrl, {
+    await fetch(baseUrl + `order`, {
         method: "PUT",
         body: JSON.stringify(bodyObj),
         headers: headers
     })
         .catch(err => console.error(err))
 
-    return getNotes(userId);
+    return getActiveOrders();
 }
 
 const createCards = (array) => {
 const container = document.getElementById("active-orders")
     container.innerHTML = ''
     array.forEach(obj => {
-    console.log(obj)
+    //console.log(obj)
         let orderCard = document.createElement("div")
         orderCard.classList.add("m-2")
         orderCard.innerHTML = `
             <div class="card d-flex" style="width: 18rem; height: 18rem;">
                     <div class="card-body d-flex flex-column  justify-content-between" style="height: available">
-                        <p class="card-text">Order #${obj.orderId}</p>
+                        <h2>Order #${obj.orderId}</h2>
+                            <p id="body${obj.orderId}">${obj.item}</p>
+
                         <div class="d-flex justify-content-between">
-                            <button onclick="getNoteById(${obj.id})" type="button" class="lite-btn"
-                                    data-bs-toggle="modal" data-bs-target="#note-edit-modal">
-                                Edit
-                            </button>
-                            <button class="brown-btn btn" onclick="handleDelete(${obj.id})">Delete</button>
+                            <button class="brown-btn" onclick="handleDelete(${obj.orderId})">Delete</button>
                         </div>
                     </div>
                 </div>
@@ -93,9 +106,10 @@ function handleLogout(){
 }
 
 const populateModal = (obj) =>{
-    noteBody.innerText = ''
-    noteBody.innerText = obj.body
-    updateNoteBtn.setAttribute('data-note-id', obj.id)
+    console.log(obj)
+    body.innerText = ''
+    body.innerText = obj.body
+    updateOrderBtn.setAttribute('data-note-id', obj.id)
 }
 
 async function createOrder() {
@@ -114,11 +128,9 @@ async function createOrder() {
 getActiveOrders();
 
 // trigger order form page
-triggerOrder.addEventListener('click', createOrder)
+//triggerOrder.addEventListener('click', createOrder)
 // button to trigger delete
 
 // trigger edit
-//updateNoteBtn.addEventListener("click", (e)=>{
-//    let noteId = e.target.getAttribute('data-note-id')
-//    handleNoteEdit(noteId);
+updateOrderBtn.addEventListener("click", handleOrderEdit);
 //})

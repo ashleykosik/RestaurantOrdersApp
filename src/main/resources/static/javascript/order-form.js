@@ -1,4 +1,8 @@
 
+const cookieArr = document.cookie.split("=")
+const userId = parseInt(cookieArr[1]);
+
+
 //submit button
 const form = document.getElementById('form-submit')
 //input
@@ -10,7 +14,7 @@ const headers = {
 'Content-Type': 'application/json'
 }
 
-const baseUrl = 'http://localhost:8080/api/v1/menu'
+const baseUrl = 'http://localhost:8080/api/v1/order'
 
 const handleSubmit = async (e) => {
     e.preventDefault()
@@ -18,13 +22,14 @@ const handleSubmit = async (e) => {
         body: item.value
     }
     console.log(bodyObj)
+    console.log(cookieArr)
     await addItem(bodyObj);
     item.value = ''
 }
 
-//ask about routing
+
 async function addItem(obj) {
-    const response = await fetch(`${baseUrl}order/${orderId}`, {
+    const response = await fetch(`${baseUrl}/createOrder/${userId}`, {
         method: "POST",
         body: JSON.stringify(obj),
         headers: headers
@@ -36,7 +41,6 @@ async function addItem(obj) {
 }
 
 
-// get next order id? or change routing above
 
 async function getOrdersTableSize() {
     await fetch(`${baseUrl}user/${userId}`, {
@@ -47,8 +51,5 @@ async function getOrdersTableSize() {
         .then(data => createNoteCards(data))
         .catch(err => console.error(err))
 }
-//getFetchSize();
 
-
-//event listener
 form.addEventListener('click', handleSubmit)

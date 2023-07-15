@@ -1,7 +1,9 @@
 package com.devmountain.RestaurantPOS.entities;
 
 
+import com.devmountain.RestaurantPOS.dtos.EmployeeDto;
 import com.devmountain.RestaurantPOS.dtos.OrderDto;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,10 +32,12 @@ public class Order {
     @Column(name = "complete", columnDefinition = "boolean default false")
     private boolean complete = false; // default
 
-    @OneToMany(mappedBy ="order", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JsonManagedReference
-    private Set<Menu> menuSet = new HashSet<>();
+    @Column(name = "item")
+    private String item;
 
+    @ManyToOne
+    @JsonBackReference
+    private Employee employee;
 
     public Order (OrderDto orderDto) {
         if (orderDto.getOrderId() != null) {
@@ -44,6 +48,9 @@ public class Order {
         }
         if (orderDto.isComplete()) {
             this.complete = orderDto.isComplete();
+        }
+        if (orderDto.getItem() != null) {
+            this.item = orderDto.getItem();
         }
     }
 }

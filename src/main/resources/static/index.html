@@ -12,8 +12,29 @@
 <body>
 <div class="title">
     <h1 id="dashboard">New Order</h1>
-    <button class="title" id="trigger-order"><img src="images/addbutton.png"> </button>
+    <a href="order-form.html" class="title" id="trigger-order"><img src="images/addbutton.png"></a>
+    <button id="space"></button>
+    <button class="btn btn-primary" id="logout">Logout</button>
 </div>
+<section class="center" id="">
+    <div class="card d-flex" style="width: 18rem;">
+        <div class="card-body d-flex flex-column  justify-content-between" style="height: available">
+            <h1 id="edit-order-title">Edit Order</h1>
+            <h2 id="edit-order-label">Order #</h2>
+            <input type="text" id="edit-order-number">
+            <textarea class="form-control" id="order-body"></textarea>
+            <div class="d-flex justify-content-between">
+                <button onclick="getOrderById(${obj.orderId})" type="button" class="lite-btn edit-button" id="edit-button"
+                        data-bs-toggle="modal" data-bs-target="#note-edit-modal">
+                    Edit
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+
+</section>
     <h1>Active Orders</h1>
     <section class="center" id="active-orders">
 

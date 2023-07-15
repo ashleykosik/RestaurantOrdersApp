@@ -16,6 +16,7 @@ public class OrderDto implements Serializable {
     private Long orderId;
     private Date date = new Date();
     private boolean complete;
+    private String item;
 
     public OrderDto (Order order) {
         if (order.getOrderId() != null) {
@@ -26,6 +27,9 @@ public class OrderDto implements Serializable {
         }
         if (order.isComplete()) {
             this.complete = order.isComplete();
+        }
+        if (order.getItem() != null) {
+            this.item = order.getItem();
         }
     }
 

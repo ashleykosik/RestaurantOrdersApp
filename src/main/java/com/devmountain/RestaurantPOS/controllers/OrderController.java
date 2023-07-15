@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/order")
@@ -24,9 +25,19 @@ public class OrderController {
         return orderService.getAllOrders();
     }
 
-    @PostMapping("/createOrder")
-    public List<String> createOrder() {
-        return orderService.createOrder();
+    @GetMapping("/employee/{id}")
+    public List<OrderDto> getOrdersByEmployee(@PathVariable Long id) {
+        return orderService.getAllOrdersByEmployee(id);
+    }
+
+    @GetMapping("/{orderId}")
+    public Optional<OrderDto> getOrderById(@PathVariable Long orderId) {
+        return orderService.getOrderById(orderId);
+    }
+
+    @PostMapping("createOrder/{userId}")
+    public void createOrder(@RequestBody OrderDto orderDto, @PathVariable Long userId) {
+        orderService.createOrder(orderDto, userId);
     }
 
     // change completion status
