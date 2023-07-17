@@ -20,10 +20,10 @@ public class OrderController {
         return orderService.getAllActiveOrders();
     }
 
-    @GetMapping
-    public int getAllOrders() {
-        return orderService.getAllOrders();
-    }
+//    @GetMapping
+//    public int getAllOrders() {
+//        return orderService.getAllOrders();
+//    }
 
     @GetMapping("/employee/{id}")
     public List<OrderDto> getOrdersByEmployee(@PathVariable Long id) {
@@ -38,7 +38,6 @@ public class OrderController {
     @PostMapping("createOrder/{userId}")
     public void createOrder(@RequestBody OrderDto orderDto, @PathVariable Long userId) {
         System.out.println(orderDto);
-        System.out.println(userId);
         orderService.createOrder(orderDto, userId);
     }
 

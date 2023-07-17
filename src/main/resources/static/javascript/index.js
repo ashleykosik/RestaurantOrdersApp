@@ -2,9 +2,10 @@
 //html elements
 const triggerOrder = document.getElementById('trigger-order')
 const updateOrderBtn = document.getElementById('edit-button')
-
+const logout = document.getElementById('logout')
 const orderNum = document.getElementById('edit-order-number')
-const item = document.getElementById('order-body')
+
+let item = document.getElementById('order-body')
 
 
 
@@ -104,6 +105,7 @@ function handleLogout(){
     for(let i in c){
         document.cookie = /^[^=]+/.exec(c[i])[0]+"=;expires=Thu, 01 Jan 1970 00:00:00 GMT"
     }
+    window.location.replace("login.js")
 }
 
 const populateModal = (obj) =>{
@@ -134,4 +136,4 @@ getActiveOrders();
 
 // trigger edit
 updateOrderBtn.addEventListener("click", handleOrderEdit);
-//})
+logout.addEventListener("click", handleLogout);

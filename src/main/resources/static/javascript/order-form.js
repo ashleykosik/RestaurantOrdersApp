@@ -13,26 +13,21 @@ const headers = {
 
 const baseUrl = 'http://localhost:8080/api/v1/order'
 
-const handleSubmit = async (e) => {
+async function handleSubmit (e) {
     e.preventDefault()
     let bodyObj = {
-        body: item.value
+        item: item.value
     }
 
     console.log(bodyObj)
-    const response = await fetch(`${baseUrl}/createOrder/${userId}`, {
+    await fetch(`${baseUrl}/createOrder/${userId}`, {
             method: "POST",
             body: JSON.stringify(bodyObj),
             headers: headers
         })
             .catch(err => console.error(err.message))
+            .then(alert("Order Placed"));
 
-        const responseArr = await response.json()
-
-        if (response.status === 200){
-            alert("Order Placed");
-            item.value = ''
-        }
 }
 
 form.addEventListener('click', handleSubmit)
