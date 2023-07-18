@@ -7,6 +7,7 @@ const orderNum = document.getElementById('edit-order-number')
 
 let item = document.getElementById('order-body')
 
+let routeId = document.cookie.at(-1)
 
 
 
@@ -17,15 +18,15 @@ const headers = {
 
 const baseUrl = "http://localhost:8080/api/v1/"
 
-async function getActiveOrders() {
-    await fetch(`${baseUrl}order/active`, {
-        method: "GET",
-        headers: headers
-    })
-        .then(response => response.json())
-        .then(data => createCards(data))
-        .catch(err => console.error(err))
-}
+//async function getActiveOrders() {
+//    await fetch(`${baseUrl}order/active`, {
+//        method: "GET",
+//        headers: headers
+//    })
+//        .then(response => response.json())
+//        .then(data => createCards(data))
+//        .catch(err => console.error(err))
+//}
 
 async function getAllOrders() {
     await fetch(`${baseUrl}order`, {
@@ -35,6 +36,17 @@ async function getAllOrders() {
         .catch(err => console.error(err))
          // store orders.length in session storage
          return document.cookie = response
+}
+
+
+async function getAllOrdersByEmployee(id) {
+    await fetch(`${baseUrl}order/employee/` + id, {
+    method: "GET",
+    headers: headers
+    })
+    .then(response => response.json())
+    .then(data => createCards(data))
+    .catch(err => console.error(err))
 }
 
 async function getOrderById(orderId) {
@@ -54,7 +66,7 @@ async function handleDelete(orderId){
     })
         .catch(err => console.error(err))
 
-    return getActiveOrders();
+    return getAllOrdersByEmployee(routeId);
 }
 
 async function handleOrderEdit(e){
@@ -73,14 +85,13 @@ async function handleOrderEdit(e){
         .then(item.innerText = '')
         .catch(err => console.error(err))
 
-    return getActiveOrders();
+    return getAllOrdersByEmployee(routeId);
 }
 
 const createCards = (array) => {
 const container = document.getElementById("active-orders")
     container.innerHTML = ''
     array.forEach(obj => {
-    //console.log(obj)
         let orderCard = document.createElement("div")
         orderCard.classList.add("m-2")
         orderCard.innerHTML = `
@@ -105,7 +116,7 @@ function handleLogout(){
     for(let i in c){
         document.cookie = /^[^=]+/.exec(c[i])[0]+"=;expires=Thu, 01 Jan 1970 00:00:00 GMT"
     }
-    window.location.replace("login.js")
+    window.location.replace("login.html")
 }
 
 const populateModal = (obj) =>{
@@ -124,11 +135,12 @@ async function createOrder() {
             const responseArr = await response.json()
         if (response.status == 200) {
            window.location.replace(responseArr[0])
-           return getAllOrders()
+           return getAllOrdersByEmployee(routeId)
         }
     }
 
-getActiveOrders();
+getAllOrdersByEmployee(routeId);
+
 
 // trigger order form page
 //triggerOrder.addEventListener('click', createOrder)

@@ -27,10 +27,10 @@ const handleSubmit = async (e) => {
 
         const responseArr = await response.json()
         if (response.status === 200) {
+            console.log(responseArr)
             document.cookie = `userId=${responseArr[1]}`
-            document.cookie += `name=${responseArr[2]}`
             //alert(responseArr[0])
-            window.location.replace(responseArr[3])
+            window.location.replace(responseArr[2])
         }
 }
 
